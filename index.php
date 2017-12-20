@@ -20,6 +20,20 @@ $app->get('/', function() {
 
 });
 
+$app->get('/admin/users', function()
+{
+
+	User::verifyLogin();
+
+	$user = User::listAll();
+
+	$page = new PageAdmin(array(
+		"users"=>$user
+	),"views/admin/");
+	
+	$page->setTpl("users");
+});
+
 $app->get('/admin', function() {
 
 
@@ -54,17 +68,7 @@ $app->get('/admin/logout', function(){
 	exit;
 });
 
-$app->get('/admin/users', function(){
 
-	User::verifyLogin();
-
-	$user = User::listAll();
-
-	$page = new PageAdmin("users", array(
-		"users"=>$user));
-	
-	$page->setTpl("users");
-});
 
 $app->get('/admin/users/create', function(){
 
